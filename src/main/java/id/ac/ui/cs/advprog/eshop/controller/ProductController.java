@@ -19,9 +19,10 @@ public class ProductController {
     @GetMapping("/create")
     public String createProductPage(Model model) {
         Product product = new Product();
-        model.addAttribute("product", product); // ✅ Perbaikan di sini
+        model.addAttribute("product", product);  // ✅ Must match the form in HTML
         return "createProduct";
     }
+
 
     @PostMapping("/create")
     public String createProduct(@ModelAttribute Product product) {
@@ -32,8 +33,8 @@ public class ProductController {
     @GetMapping("/list")
     public String productListPage(Model model) {
         List<Product> products = service.findAll();
-        model.addAttribute("products", products); // ✅ Perbaikan di sini
-        return "productList";
+        model.addAttribute("products", products);
+        return "productList";  // ✅ Must match the filename in "templates" folder
     }
 }
 
