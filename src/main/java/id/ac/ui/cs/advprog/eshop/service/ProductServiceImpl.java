@@ -10,22 +10,42 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
-public class ProductServiceImpl implements ProductService {  // ✅ Perbaikan di sini
+public class ProductServiceImpl implements ProductService {
+
     @Autowired
     private ProductRepository productRepository;
 
     @Override
     public Product create(Product product) {
-        return productRepository.create(product);
+        productRepository.create(product);
+        return product;
+    }
+
+    @Override
+    public Product update(String productId, Product product) {
+        return productRepository.update(productId, product);
+    }
+
+    public Product delete(String productId) {
+        return productRepository.delete(productId);
+    }
+
+    @Override
+    public Product findById(String id) {
+        return productRepository.findById(id);
     }
 
     @Override
     public List<Product> findAll() {
         Iterator<Product> productIterator = productRepository.findAll();
-        List<Product> productList = new ArrayList<>();
-        productIterator.forEachRemaining(productList::add);
-        return productList; // ✅ Tidak ada error lagi
+        List<Product> allProduct = new ArrayList<>();
+        productIterator.forEachRemaining(allProduct::add);
+        return allProduct;
     }
 }
+
+
+
+
 
 

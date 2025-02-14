@@ -9,9 +9,10 @@
 
 <div class="container my-2">
     <h2>Product' List</h2>
-    <a th:href="@{/product/create}" class="btn btn-primary btn-sm mb-3">Create Product</a>
+    <a th:href="@{/product/create}" class="btn btn-primary btn-sm mb-3" id="create-button">Create Product</a>
 
     <table border="1" class="table table-striped table-responsive-md">
+        <caption> List Products</caption>
         <thead>
         <tr>
             <th scope="col">Product Name</th>
@@ -22,6 +23,14 @@
         <tr th:each="product: ${products}">
             <td th:text="${product.productName}"></td>
             <td th:text="${product.productQuantity}"></td>
+            <td>
+                <a th:href="@{'/product/edit/' + ${product.productID}}" style="display: inline-block;">
+                    <button class="btn btn-primary btn-sm px-3" style="background-color: mediumblue;">Edit</button>
+                </a>
+                <form th:action="@{'/product/delete/' + ${product.productID}}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm px-2 mx-2" style="background-color: red;">Delete</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>

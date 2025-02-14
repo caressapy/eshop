@@ -30,6 +30,29 @@ public class ProductController {
         return "redirect:/product/list"; // ✅ Menambahkan '/' agar path lebih jelas
     }
 
+    @GetMapping("/edit/{productId}")
+    public String editProductPage(@PathVariable String productId, Model model) {
+        Product existingProduct = service.findById(productId);
+        if (existingProduct == null) {
+            // Handle the case where the product is not found
+            return "redirect:/product/list";  // Or show an error page
+        }
+        model.addAttribute("product", existingProduct);
+        return "editProduct";
+    }
+
+    @PostMapping("/edit/{productId}")
+    public String editProductPost(@PathVariable String productId, @ModelAttribute Product updatedProduct) {
+        service.update(productId, updatedProduct);
+        return "redirect:/product/list";
+    }
+
+    @PostMapping("/delete/{productId}")
+    public String deleteProduct(@PathVariable String productId) {
+        service.delete(productId);
+        return "redirect:/product/list";
+    }
+
     @GetMapping("/list")
     public String productListPage(Model model) {
         List<Product> products = service.findAll();
