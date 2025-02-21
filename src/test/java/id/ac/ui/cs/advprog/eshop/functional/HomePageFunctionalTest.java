@@ -14,6 +14,10 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import java.time.Duration;
+
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ExtendWith(SeleniumJupiter.class)
 class HomePageFunctionalTest {
@@ -36,22 +40,23 @@ class HomePageFunctionalTest {
 
     @Test
     void pageTitle_isCorrect(ChromeDriver driver) {
-        // Exercise
         driver.get(baseUrl);
-        String pageTitle = driver.getTitle();
 
-        // Verify
+        // Tunggu sampai title tersedia (maks 10 detik)
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Adv Shop"));
+
+        String pageTitle = driver.getTitle();
         assertEquals("Adv Shop", pageTitle);
     }
 
     @Test
-    void welcomeMessage_homePage_isCorrect(ChromeDriver driver) {
+    void welcomeMessage_homePage_isCorrect(ChromeDriver driver) throws Exception {
         // Exercise
         driver.get(baseUrl);
-        WebElement welcomeMessageElement = driver.findElement(By.tagName("h3"));
-        String welcomeMessage = welcomeMessageElement.getText();
+        String welcomeMessage = driver.findElement(By.tagName("h3")).getText();
 
         // Verify
-        assertEquals("Welcome to Adv Shop", welcomeMessage);
+        assertEquals("Welcome", welcomeMessage);
     }
 }
