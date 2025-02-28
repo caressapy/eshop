@@ -11,7 +11,6 @@ import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-
     @Autowired
     private ProductRepository productRepository;
 
@@ -22,17 +21,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product update(String productId, Product product) {
-        return productRepository.update(productId, product);
-    }
-
-    public Product delete(String productId) {
-        return productRepository.delete(productId);
-    }
-
-    @Override
-    public Product findById(String id) {
-        return productRepository.findById(id);
+    public void edit(Product product) {
+        productRepository.edit(product);
     }
 
     @Override
@@ -41,6 +31,15 @@ public class ProductServiceImpl implements ProductService {
         List<Product> allProduct = new ArrayList<>();
         productIterator.forEachRemaining(allProduct::add);
         return allProduct;
+    }
+
+    @Override
+    public Product findById(String id) {
+        return productRepository.findById(id);
+    }
+
+    public void delete(String productID) {
+        productRepository.delete(productID);
     }
 }
 

@@ -1,45 +1,41 @@
 package id.ac.ui.cs.advprog.eshop.repository;
 
 import id.ac.ui.cs.advprog.eshop.model.Product;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Repository
 public class ProductRepository {
-    private List<Product> productData = new ArrayList<>();
-    private long id = 1;
-    Logger logger = LoggerFactory.getLogger(ProductRepository.class);
+    private final List<Product> productData = new ArrayList<>();
+    private long idCounter = 0;
 
     public Product create(Product product) {
-        product.setProductID(Long.toString(this.id));
-        this.id++;
+        if (product == null) throw new NullPointerException("Product cannot be null");
+
+        if (product.getProductId() == null) product.setProductId(String.valueOf(idCounter++));
+
         productData.add(product);
         return product;
     }
 
-    public Product update(String productId, Product updatedProduct) {
-        Product product = findById(productId);
-        if (product == null) {
-            return null;
+    public void edit(Product product) {
+        if (product == null) throw new NullPointerException("Product cannot be null");
+
+        if (product.getProductId() == null) throw new NullPointerException("Product ID cannot be null");
+
+        for (int i = 0; i < productData.size(); i++) {
+            if (productData.get(i).getProductId().equals(product.getProductId())) {
+                productData.set(i, product);
+                break;
+            }
         }
-        product.setProductName(updatedProduct.getProductName());
-        product.setProductQuantity(updatedProduct.getProductQuantity());
-        return product;
     }
 
-    public Product delete(String productID) {
-        Product product = findById(productID);
-        if (product == null) {
-            return null;
-        }
-        productData.remove(product);
-        return product;
+    public void delete(String productID) {
+        productData.removeIf(product -> product.getProductId().equals(productID));
     }
 
     public Iterator<Product> findAll() {
@@ -48,20 +44,10 @@ public class ProductRepository {
 
     public Product findById(String id) {
         for (Product product : productData) {
-            if (product.getProductID().equals(id)) {
+            if (product.getProductId().equals(id)) {
                 return product;
             }
         }
         return null;
-    }
-
-    public void printAllProducts() {
-        logger.info("List of Products:");
-        for (Product product : productData) {
-            logger.info("Product ID: " + product.getProductID());
-            logger.info("Product Name: " + product.getProductName());
-            logger.info("Product Quantity: " + product.getProductQuantity());
-        }
-        logger.info("------------------------");
     }
 }
