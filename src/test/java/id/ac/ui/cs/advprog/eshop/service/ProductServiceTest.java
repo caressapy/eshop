@@ -1,56 +1,77 @@
 package id.ac.ui.cs.advprog.eshop.service;
 
 import id.ac.ui.cs.advprog.eshop.model.Product;
+import id.ac.ui.cs.advprog.eshop.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-class ProductServiceTest {
-    private ProductService productService;
-    private Product existingProduct;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+class ProductServiceImplTest {
+    @Mock
+    private ProductRepository productRepository;
+
+    @InjectMocks
+    private ProductServiceImpl productService;
+
+    private Product product;
 
     @BeforeEach
     void setUp() {
-        productService = new ProductServiceImpl(); // Sesuaikan dengan implementasi service Anda
-        existingProduct = new Product();
-        existingProduct.setProductID("123456789");
-        existingProduct.setProductName("Product1");
-        existingProduct.setProductQuantity(100);
-        productService.create(existingProduct);
+        product = new Product();
+        product.setProductId("1");
+        product.setProductName("Test Product");
+        product.setProductQuantity(69);
     }
 
     @Test
-    void testUpdateProduct_Success() {
-        Product updatedProduct = new Product();
-        updatedProduct.setProductID("1");
-        updatedProduct.setProductName("Updated Product");
-        updatedProduct.setProductQuantity(150);
-
-        Product result = productService.update("1", updatedProduct);
-        assertNotNull(result, "Product should be updated");
-        assertEquals("Updated Product", result.getProductName(), "Product name should be updated");
-        assertEquals(150, result.getProductQuantity(), "Product quantity should be updated");
+    void testCreate() {
+        when(productRepository.create(product)).thenReturn(product);
+        Product createdProduct = productService.create(product);
+        assertEquals(product, createdProduct);
+        verify(productRepository, times(1)).create(product);
     }
 
     @Test
-    void testUpdateProduct_Fail_ProductNotFound() {
-        Product nonExistentProduct = new Product();
-        Product result = productService.update("99", nonExistentProduct);
-        assertNull(result, "Updating non-existent product should return null");
+    void testEdit() {
+        doNothing().when(productRepository).edit(product);
+        productService.edit(product);
+        verify(productRepository, times(1)).edit(product);
     }
 
     @Test
-    void testDeleteProduct_Success() {
-        Product deletedProduct = productService.delete("1");
-        assertNotNull(deletedProduct, "Deleted product should not be null");
-        assertEquals("Test Product", deletedProduct.getProductName(), "Deleted product name should match");
+    void testFindAll() {
+        List<Product> productList = Collections.singletonList(product);
+        Iterator<Product> iterator = productList.iterator();
+        when(productRepository.findAll()).thenReturn(iterator);
+        List<Product> result = productService.findAll();
+        assertEquals(1, result.size());
+        assertEquals(product, result.getFirst());
+        verify(productRepository, times(1)).findAll();
     }
 
     @Test
-    void testDeleteProduct_Fail_ProductNotFound() {
-        Product result = productService.delete("99");
-        assertNull(result, "Deleting non-existent product should return null");
+    void testFindById() {
+        when(productRepository.findById("1")).thenReturn(product);
+        Product foundProduct = productService.findById("1");
+        assertEquals(product, foundProduct);
+        verify(productRepository, times(1)).findById("1");
     }
 
+    @Test
+    void testDelete() {
+        doNothing().when(productRepository).delete("1");
+        productService.delete("1");
+        verify(productRepository, times(1)).delete("1");
+    }
 }
