@@ -50,3 +50,25 @@ Setelah meninjau kembali kode sumber saya, berikut adalah beberapa prinsip *clea
 ---
 
 Dengan penerapan prinsip-prinsip tersebut, kode saya menjadi lebih mudah dibaca, lebih aman, dan lebih terstruktur. Tentunya, masih banyak ruang untuk perbaikan, terutama dalam hal validasi input dan penanganan kesalahan. Saya akan terus mengembangkan kemampuan saya untuk menulis kode yang lebih bersih dan aman di masa depan.
+
+reflection 4
+
+
+1. Refleksi Mengenai Alur TDD
+Berdasarkan pengalaman saya dalam mengikuti alur TDD pada exercise ini, saya merasa alur tersebut sangat berguna, terutama dalam membantu saya menjaga fokus pada fungsi yang sedang dikembangkan dan memastikan bahwa setiap bagian kode yang saya buat telah teruji dengan baik. Namun, pada beberapa titik, saya merasa bahwa alur TDD bisa terasa sedikit berulang-ulang dan terkadang memakan waktu lebih lama daripada hanya menulis kode langsung tanpa tes terlebih dahulu.
+
+Namun, saya memahami bahwa TDD membantu saya memastikan bahwa kode yang saya buat bebas dari bug sejak awal dan memastikan bahwa setiap fitur yang saya buat memiliki unit test yang sesuai. Saya juga belajar pentingnya menulis tes yang sederhana dan jelas, yang sangat membantu saat melakukan debugging.
+
+Jika saya merasa alur ini kurang efektif di masa depan, saya mungkin perlu lebih mengoptimalkan proses menulis tes dengan memperhatikan kesederhanaan tes dan mencoba untuk lebih fokus pada penulisan tes yang mudah dipahami dan mengurangi kompleksitas dalam langkah-langkah pengujian.
+
+2. Refleksi Mengenai Prinsip F.I.R.S.T. pada Tes Saya
+Mengenai prinsip F.I.R.S.T. (Fast, Independent, Repeatable, Self-validating, Timely), saya merasa bahwa sebagian besar tes yang saya buat sudah memenuhi prinsip-prinsip tersebut, meskipun ada beberapa area yang bisa saya tingkatkan.
+
+Fast: Tes yang saya buat umumnya cepat dijalankan, namun terkadang ada tes yang agak lambat karena bergantung pada data yang besar atau kompleks.
+Independent: Sebagian besar tes saya independen, meskipun ada beberapa tes yang secara tidak sengaja terhubung karena ketergantungan antar modul.
+Repeatable: Tes yang saya buat sudah bisa dijalankan berulang kali tanpa masalah.
+Self-validating: Saya merasa sebagian besar tes saya dapat memberikan hasil yang jelas dan mudah dipahami, namun ada kalanya hasil tesnya membutuhkan interpretasi manual.
+Timely: Saya merasa sudah cukup cepat dalam menulis tes sesuai dengan kebutuhan fitur yang dikembangkan, namun terkadang proses menulis tes bisa lebih efisien.
+Jika saya tidak sepenuhnya mengikuti prinsip F.I.R.S.T., hal yang perlu saya lakukan adalah memastikan bahwa tes yang saya buat lebih independen dan tidak saling bergantung, serta lebih memperhatikan untuk membuat tes lebih cepat dan mudah dipahami.
+
+
